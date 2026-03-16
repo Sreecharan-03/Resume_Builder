@@ -1,10 +1,9 @@
 services:
   - type: web
     name: resume-builder-backend
-    env: java
+    env: docker
     rootDir: resume-builder-backend
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/resume-builder-backend-1.0.0.jar
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
     envVars:
       - key: JWT_SECRET
@@ -31,6 +30,8 @@ services:
         value: org.hibernate.dialect.H2Dialect
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
+      - key: PORT
+        value: 10000
 
   - type: web
     name: resume-builder-frontend
