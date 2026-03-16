@@ -32,7 +32,7 @@ services:
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
 
-  - type: static_site
+  - type: static
     name: resume-builder-frontend
     rootDir: resume-builder
     buildCommand: npm install && npm run build
