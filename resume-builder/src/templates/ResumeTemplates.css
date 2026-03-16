@@ -1,0 +1,2363 @@
+/* ===============================
+   DATA SCIENTIST / JUNIOR DEV TEMPLATE
+   =============================== */
+.resume-template.datasci {
+  background: #232a34;
+  color: #fff;
+  font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+  padding: 0.6in 0.5in;
+  min-height: 11in;
+}
+.datasci-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #3b4252;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+.datasci-header-left, .datasci-header-right {
+  font-size: 0.92rem;
+  color: #c6d0d8;
+  min-width: 120px;
+}
+.datasci-header-center {
+  text-align: center;
+  flex: 1;
+}
+.datasci-header-center h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+.datasci-title {
+  font-size: 1.1rem;
+  color: #a3e635;
+  font-weight: 500;
+}
+.datasci-summary {
+  margin: 0.8rem 0 1rem 0;
+  font-size: 1.02rem;
+  color: #e7eef6;
+  font-weight: 400;
+}
+.datasci-section {
+  margin-bottom: 1.1rem;
+}
+.datasci-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #a3e635;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.5px;
+}
+.datasci-skills-table {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.datasci-skills-table > div {
+  min-width: 180px;
+  font-size: 0.98rem;
+  color: #e0e7ef;
+}
+.datasci-exp-block {
+  margin-bottom: 0.7rem;
+}
+.datasci-exp-row {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 1rem;
+  color: #e0e7ef;
+  font-weight: 500;
+}
+.datasci-exp-role { min-width: 120px; }
+.datasci-exp-company { min-width: 120px; }
+.datasci-exp-dates { min-width: 120px; color: #a3e635; }
+.datasci-exp-location { min-width: 120px; }
+.datasci-exp-list {
+  margin: 0.2rem 0 0.5rem 1.2rem;
+  color: #bfc9d1;
+  font-size: 0.97rem;
+}
+.datasci-edu-block {
+  margin-bottom: 0.3rem;
+  color: #e0e7ef;
+  font-size: 1rem;
+}
+.datasci-edu-date {
+  float: right;
+  color: #a3e635;
+  font-size: 0.97rem;
+  margin-left: 1.2rem;
+}
+.datasci-activities {
+  margin: 0.2rem 0 0.5rem 1.2rem;
+  color: #bfc9d1;
+  font-size: 0.97rem;
+}
+
+/* Classic Academic */
+.resume-template.classic-academic { background: #fff; color:#111; }
+.classic-header .rt-name { font-size:1.7rem; font-weight:700; margin-bottom:0.15rem; }
+.classic-contact { display:flex; gap:1rem; color:#444; font-size:0.95rem; }
+.academic-table { width:100%; border-collapse: collapse; margin-top:0.5rem; }
+.academic-table th, .academic-table td { border:1px solid #e5e7eb; padding:6px 8px; font-size:0.95rem; }
+.academic-table thead th { background:#f8fafc; text-align:left; }
+
+/* Three column */
+.resume-template.three-column .threecol-body { display:flex; gap:2rem; }
+.threecol-column { flex:1; background:#fff; padding:0.9rem; border-radius:6px; box-shadow:0 3px 6px rgba(0,0,0,0.06); min-width:180px; }
+.threecol-header .rt-name { font-size:1.6rem; }
+
+/* Traditional */
+.resume-template.traditional { background:#fff; color:#111; }
+.traditional-header .rt-name { font-size:1.9rem; font-weight:700; }
+.traditional-header .rt-contact { color:#444; margin-top:8px; font-size:0.95rem; }
+/* =====================================================
+   RESUME TEMPLATES - BASE STYLES
+   ===================================================== */
+
+.resume-template {
+  width: 100%;
+  max-width: 8.5in;
+  min-height: 11in;
+  margin: 0 auto;
+  background: #ffffff;
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10.8pt;
+  line-height: 1.45;
+  color: #1a1a1a;
+  padding: 0.5in;
+  box-sizing: border-box;
+}
+
+/* Common Section Styles */
+.rt-header {
+  margin-bottom: 1.5rem;
+}
+
+.rt-name {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.rt-title {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+.rt-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.rt-contact span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.rt-section {
+  margin-bottom: 1.25rem;
+}
+
+.rt-section-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 0.6rem 0;
+  padding-bottom: 0.22rem;
+  border-bottom: 2px solid #d1d5db;
+  color: #0f172a;
+}
+
+.rt-summary {
+  font-size: 0.95rem;
+  color: #444;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.rt-item {
+  margin-bottom: 1rem;
+}
+
+.rt-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.rt-item-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.rt-item-subtitle {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.1rem 0;
+}
+
+.rt-item-date {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.rt-item-desc {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.rt-item-list {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.rt-item-list li {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 0.25rem;
+}
+
+.rt-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rt-skill-tag {
+  background: #f3f4f6;
+  color: #111827;
+  padding: 0.28rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.86rem;
+  border: 1px solid rgba(16,24,40,0.04);
+}
+
+.rt-tech {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* =====================================================
+   TEMPLATE 1: Modern Professional
+   ===================================================== */
+
+.resume-template.modern .rt-section-title {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.modern-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modern-header .rt-contact {
+  justify-content: center;
+}
+
+.resume-template.modern .rt-skill-tag {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* =====================================================
+   TEMPLATE 2: Creative Designer
+   ===================================================== */
+
+.resume-template.creative {
+  background: linear-gradient(135deg, #f8f7ff 0%, #fff 50%);
+}
+
+.creative-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border-radius: 12px;
+  margin: -0.5in;
+  margin-bottom: 1.5rem;
+}
+
+.creative-avatar {
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.creative-info .rt-name {
+  color: white;
+}
+
+.creative-info .rt-title {
+  color: rgba(255,255,255,0.9);
+}
+
+.creative-contact {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.creative-contact span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.creative-body {
+  padding-top: 1rem;
+}
+
+.creative-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.creative-section-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.creative-section-content {
+  flex: 1;
+}
+
+.creative-section-content .rt-section-title {
+  border-color: #8b5cf6;
+  color: #7c3aed;
+}
+
+.creative-item {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.creative-timeline {
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 3px;
+  height: calc(100% - 0.5rem);
+  background: #e9d5ff;
+  border-radius: 2px;
+}
+
+.creative-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.creative-skill-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.creative-skill-name {
+  width: 120px;
+  font-size: 0.9rem;
+}
+
+.creative-skill-bar {
+  flex: 1;
+  height: 8px;
+  background: #e9d5ff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.creative-skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+  border-radius: 4px;
+}
+
+/* =====================================================
+   TEMPLATE 3: Minimal Clean
+   ===================================================== */
+
+.resume-template.minimal {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.minimal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.minimal-header .rt-name {
+  font-weight: 300;
+  font-size: 2.5rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.minimal-divider {
+  width: 60px;
+  height: 1px;
+  background: #374151;
+  margin: 1rem auto;
+}
+
+.minimal-contact {
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.85rem;
+}
+
+.minimal-contact span {
+  color: #666;
+}
+
+.minimal-section {
+  margin-bottom: 1.5rem;
+}
+
+.minimal-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  color: #374151;
+  padding-bottom: 0.5rem;
+}
+
+.minimal-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dotted #eee;
+}
+
+.minimal-item:last-child {
+  border-bottom: none;
+}
+
+.minimal-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.minimal-item-top .rt-item-title {
+  font-weight: 500;
+}
+
+.minimal-skills {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* =====================================================
+   TEMPLATE 4: Executive Classic
+   ===================================================== */
+
+.resume-template.executive {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.executive-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.executive-header .rt-name {
+  font-size: 2.25rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.executive-header .rt-title {
+  font-style: italic;
+  color: #555;
+}
+
+.executive-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #1e3a5f, transparent);
+  margin: 1rem 0;
+}
+
+.executive-header .rt-contact {
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.executive-title {
+  color: #1e3a5f;
+  border-color: #1e3a5f;
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.executive-summary {
+  font-style: italic;
+  text-align: justify;
+}
+
+.executive-item {
+  margin-bottom: 1.25rem;
+}
+
+.executive-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.executive-company {
+  font-weight: 500;
+}
+
+.executive-list li {
+  margin-bottom: 0.35rem;
+}
+
+.executive-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.executive-skill {
+  background: #f3f4f6;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #1e3a5f;
+  font-size: 0.85rem;
+  color: #1e3a5f;
+}
+
+/* =====================================================
+   TEMPLATE 5: Tech Innovator
+   ===================================================== */
+
+.resume-template.tech {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.tech-sidebar {
+  width: 35%;
+  background: linear-gradient(180deg, #0ea5e9, #06b6d4);
+  padding: 1.5rem;
+  color: white;
+}
+
+.tech-avatar {
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.tech-sidebar .rt-name {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.tech-sidebar .rt-title {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+}
+
+.tech-contact {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tech-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.tech-skills-section {
+  margin-top: 1.5rem;
+}
+
+.tech-sidebar-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tech-skill-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.tech-main {
+  flex: 1;
+  padding: 1.5rem;
+  background: #1e293b;
+}
+
+.tech-section {
+  margin-bottom: 1.5rem;
+}
+
+.tech-title {
+  color: #06b6d4;
+  border-color: #06b6d4;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+.tech-main .rt-summary {
+  color: #cbd5e1;
+}
+
+.tech-item {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  border-left: 3px solid #06b6d4;
+}
+
+.tech-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.tech-item .rt-item-title {
+  color: #f1f5f9;
+}
+
+.tech-badge {
+  background: #06b6d4;
+  color: #0f172a;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tech-company {
+  color: #94a3b8;
+}
+
+.tech-item .rt-item-desc {
+  color: #94a3b8;
+}
+
+.tech-item .rt-item-list {
+  color: #94a3b8;
+}
+
+.tech-item .rt-item-list li {
+  color: #94a3b8;
+}
+
+.tech-projects {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.tech-project-card {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.tech-project-name {
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.tech-project-desc {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.tech-project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tech-mini-badge {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+}
+
+/* =====================================================
+   TEMPLATE 6: Elegant Serif
+   ===================================================== */
+
+.resume-template.elegant {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  background: #fffcf7;
+}
+
+.elegant-header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.elegant-name {
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.elegant-title-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #78350f;
+}
+
+.elegant-ornament {
+  color: #78350f;
+  font-size: 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.elegant-contact {
+  justify-content: center;
+  gap: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+}
+
+.elegant-section {
+  margin-bottom: 1.75rem;
+}
+
+.elegant-section-title {
+  text-align: center;
+  border: none;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #78350f;
+  margin-bottom: 0.25rem;
+}
+
+.elegant-divider {
+  width: 100px;
+  height: 1px;
+  background: #78350f;
+  margin: 0.5rem auto 1rem;
+}
+
+.elegant-summary {
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.elegant-item {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.elegant-item .rt-item-title {
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+.elegant-company-line {
+  color: #666;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.elegant-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.elegant-skills {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* =====================================================
+   TEMPLATE 7: Bold Impact
+   ===================================================== */
+
+.resume-template.bold {
+  font-family: 'Montserrat', 'Arial Black', sans-serif;
+}
+
+.bold-header {
+  margin-bottom: 2rem;
+}
+
+.bold-name-block {
+  display: inline-block;
+}
+
+.bold-name {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+}
+
+.bold-accent-bar {
+  height: 6px;
+  background: #dc2626;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.bold-title {
+  font-weight: 300;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.bold-contact {
+  margin-top: 1rem;
+  font-weight: 500;
+  gap: 1.5rem;
+}
+
+.bold-section {
+  margin-bottom: 2rem;
+}
+
+.bold-section-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  border: none;
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.bold-summary {
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.bold-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bold-item-marker {
+  width: 12px;
+  height: 12px;
+  background: #dc2626;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+.bold-item-content .rt-item-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.bold-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.bold-skill {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-left: 3px solid #dc2626;
+}
+
+/* =====================================================
+   TEMPLATE 8: Corporate Pro
+   ===================================================== */
+
+.resume-template.corporate {
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+.corporate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid #0f172a;
+}
+
+.corporate-header-main .rt-name {
+  color: #0f172a;
+}
+
+.corporate-header-main .rt-title {
+  color: #64748b;
+}
+
+.corporate-header-contact {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.corporate-header-contact div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.corporate-section {
+  margin-bottom: 1.5rem;
+}
+
+.corporate-section-header {
+  background: #f8fafc;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.corporate-section-header .rt-section-title {
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: #0f172a;
+}
+
+.corporate-item {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.corporate-item:last-child {
+  border-bottom: none;
+}
+
+.corporate-item-left {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.corporate-date {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.corporate-item-right .rt-item-title {
+  color: #0f172a;
+}
+
+.corporate-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.corporate-skill {
+  background: #0f172a;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+/* =====================================================
+   TEMPLATE 9: Academic Scholar
+   ===================================================== */
+
+.resume-template.academic {
+  font-family: 'Times New Roman', 'Georgia', serif;
+}
+
+.academic-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #166534;
+}
+
+.academic-header .rt-name {
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.academic-field {
+  color: #166534;
+  font-style: italic;
+}
+
+.academic-contact {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+.academic-section {
+  margin-bottom: 1.5rem;
+}
+
+.academic-title {
+  color: #166534;
+  border-color: #166534;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+.academic-item {
+  margin-bottom: 1rem;
+}
+
+.academic-institution {
+  font-style: italic;
+  color: #555;
+  margin: 0.25rem 0;
+}
+
+.academic-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.academic-gpa {
+  font-weight: 600;
+  color: #166534;
+  margin: 0.25rem 0;
+}
+
+.academic-skills {
+  line-height: 1.8;
+}
+
+/* =====================================================
+   TEMPLATE 10: Startup Vibe
+   ===================================================== */
+
+.resume-template.startup {
+  font-family: 'Poppins', 'Arial', sans-serif;
+  background: #fffbeb;
+}
+
+.startup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  color: white;
+  border-radius: 16px;
+  margin: -0.5in;
+  margin-bottom: 1.5rem;
+}
+
+.startup-greeting {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.startup-name {
+  color: white;
+  font-size: 2rem;
+  margin: 0.25rem 0;
+}
+
+.startup-role {
+  color: rgba(255,255,255,0.95);
+  font-size: 1rem;
+}
+
+.startup-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.startup-contact a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.startup-contact a:hover {
+  text-decoration: underline;
+}
+
+.startup-section {
+  margin-bottom: 1.5rem;
+}
+
+.startup-title {
+  color: #ea580c;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.startup-summary {
+  font-size: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  border-left: 4px solid #ea580c;
+}
+
+.startup-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.startup-timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fed7aa;
+}
+
+.startup-timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.startup-timeline-dot {
+  position: absolute;
+  left: -2rem;
+  top: 0.25rem;
+  width: 14px;
+  height: 14px;
+  background: #ea580c;
+  border-radius: 50%;
+  border: 3px solid #fffbeb;
+}
+
+.startup-company {
+  color: #ea580c;
+  font-weight: 500;
+}
+
+.startup-date {
+  font-size: 0.85rem;
+  color: #888;
+  display: inline-block;
+  background: #fff;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+
+.startup-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.startup-skill {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.startup-projects {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.startup-project {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.startup-project h3 {
+  color: #ea580c;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.startup-project p {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.startup-edu {
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   TEMPLATE 11: Healthcare Pro
+   ===================================================== */
+
+.resume-template.healthcare {
+  font-family: 'Source Sans Pro', 'Arial', sans-serif;
+}
+
+.healthcare-header {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, #ecfeff 0%, white 100%);
+  border-bottom: 3px solid #0891b2;
+}
+
+.healthcare-logo {
+  font-size: 2.5rem;
+  color: #0891b2;
+  margin-bottom: 0.5rem;
+}
+
+.healthcare-header .rt-name {
+  color: #0c4a6e;
+}
+
+.healthcare-header .rt-title {
+  color: #0891b2;
+  font-weight: 500;
+}
+
+.healthcare-contact {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.healthcare-section {
+  margin-bottom: 1.5rem;
+}
+
+.healthcare-title {
+  color: #0891b2;
+  border-color: #0891b2;
+}
+
+.healthcare-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.healthcare-facility {
+  color: #0891b2;
+  font-weight: 500;
+  margin: 0.25rem 0;
+}
+
+.healthcare-dates {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.healthcare-certs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.healthcare-cert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0c4a6e;
+}
+
+.healthcare-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.healthcare-skill {
+  background: #ecfeff;
+  color: #0891b2;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  border: 1px solid #0891b2;
+}
+
+/* =====================================================
+   TEMPLATE 12: Finance Expert
+   ===================================================== */
+
+.resume-template.finance {
+  font-family: 'Merriweather', 'Georgia', serif;
+}
+
+.finance-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.finance-header .rt-name {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #1e40af;
+}
+
+.finance-designation {
+  font-size: 1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.finance-divider {
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #1e40af, transparent);
+  margin: 1rem auto;
+}
+
+.finance-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.finance-section {
+  margin-bottom: 1.5rem;
+}
+
+.finance-title {
+  color: #1e40af;
+  border-color: #1e40af;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
+
+.finance-summary {
+  text-align: justify;
+  font-family: 'Inter', sans-serif;
+}
+
+.finance-item {
+  margin-bottom: 1.25rem;
+}
+
+.finance-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.finance-item-header .rt-item-title {
+  font-family: 'Inter', sans-serif;
+}
+
+.finance-date {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-family: 'Inter', sans-serif;
+}
+
+.finance-company {
+  color: #1e40af;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.finance-achievements {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.finance-achievements li {
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.finance-competencies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.finance-competency {
+  background: #1e40af;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+}
+
+/* =====================================================
+   TEMPLATE 13: Artistic Portfolio
+   ===================================================== */
+
+.resume-template.artistic {
+  display: flex;
+  gap: 0;
+  padding: 0;
+}
+
+.artistic-sidebar {
+  width: 35%;
+  background: linear-gradient(180deg, #be185d, #9d174d);
+  padding: 1.5rem;
+  color: white;
+}
+
+.artistic-photo {
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 0 auto 1.5rem;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+
+.artistic-contact {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.artistic-contact p {
+  margin: 0.25rem 0;
+  opacity: 0.9;
+}
+
+.artistic-skills-sidebar h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.artistic-skill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.artistic-skill-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.artistic-skill-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+
+.artistic-skill-dots span.filled {
+  background: white;
+}
+
+.artistic-main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.artistic-header .rt-name {
+  color: #be185d;
+}
+
+.artistic-title {
+  color: #be185d;
+  border-color: #be185d;
+}
+
+/* =====================================================
+   TEMPLATE 14: Clean Sidebar
+   ===================================================== */
+
+.resume-template.sidebar-layout {
+  display: flex;
+  gap: 0;
+  padding: 0;
+}
+
+.sidebar-left {
+  width: 35%;
+  background: #4338ca;
+  padding: 1.5rem;
+  color: white;
+}
+
+.sidebar-photo {
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 auto 1.5rem;
+}
+
+.sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-heading {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.sidebar-left p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin: 0.35rem 0;
+}
+
+.sidebar-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sidebar-skill-tag {
+  background: rgba(255,255,255,0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.sidebar-edu {
+  margin-bottom: 1rem;
+}
+
+.sidebar-edu strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.sidebar-edu p {
+  font-size: 0.8rem;
+  margin: 0.25rem 0;
+  opacity: 0.9;
+}
+
+.sidebar-edu small {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.sidebar-right {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.sidebar-right .rt-section-title {
+  color: #4338ca;
+  border-color: #4338ca;
+}
+
+/* =====================================================
+   TEMPLATE 15: Minimal Plus
+   ===================================================== */
+
+.resume-template.minimal-plus {
+  font-family: 'Inter', sans-serif;
+}
+
+.minimal-plus-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.minimal-plus-header .rt-name {
+  font-weight: 500;
+  font-size: 2rem;
+  color: #525252;
+}
+
+.minimal-plus-contact {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #737373;
+  margin-top: 0.5rem;
+}
+
+.minimal-plus-section {
+  margin-bottom: 1.5rem;
+}
+
+.minimal-plus-summary {
+  text-align: center;
+  font-size: 1rem;
+  color: #525252;
+  font-style: italic;
+  padding: 1rem 2rem;
+}
+
+.minimal-plus-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: none;
+  color: #525252;
+  position: relative;
+  display: inline-block;
+}
+
+.minimal-plus-title::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: #525252;
+}
+
+.minimal-plus-item {
+  margin-bottom: 1rem;
+}
+
+.minimal-plus-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.minimal-plus-item-header strong {
+  font-size: 0.95rem;
+}
+
+.minimal-plus-company {
+  color: #737373;
+  margin-left: 0.5rem;
+}
+
+.minimal-plus-item p {
+  font-size: 0.9rem;
+  color: #525252;
+  margin: 0.5rem 0 0;
+}
+
+.minimal-plus-skills {
+  color: #525252;
+  font-size: 0.9rem;
+}
+
+/* =====================================================
+   TEMPLATE 16: Marketing Pro
+   ===================================================== */
+
+.resume-template.marketing {
+  font-family: 'Nunito', 'Arial', sans-serif;
+  background: linear-gradient(180deg, #f5f3ff 0%, white 30%);
+}
+
+.marketing-header {
+  padding: 2rem;
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: white;
+  border-radius: 0 0 50px 0;
+  margin: -0.5in -0.5in 1.5rem -0.5in;
+}
+
+.marketing-header .rt-name {
+  color: white;
+  font-weight: 800;
+}
+
+.marketing-tagline {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.1rem;
+}
+
+.marketing-contact {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.marketing-section {
+  margin-bottom: 1.5rem;
+}
+
+.marketing-title {
+  border: none;
+  color: #7c3aed;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.marketing-icon {
+  font-size: 1.2rem;
+}
+
+.marketing-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1);
+  border-left: 4px solid #7c3aed;
+}
+
+.marketing-company {
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.marketing-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.marketing-skill {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.marketing-edu {
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   TEMPLATE 17: Engineering Focus
+   ===================================================== */
+
+.resume-template.engineering {
+  font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+  padding: 0;
+}
+
+.engineering-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: #0369a1;
+  color: white;
+}
+
+.engineering-name-box .rt-name {
+  color: white;
+}
+
+.engineering-name-box .rt-title {
+  color: rgba(255,255,255,0.9);
+}
+
+.engineering-contact-box {
+  text-align: right;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.engineering-contact-box div {
+  margin-bottom: 0.25rem;
+}
+
+.engineering-body {
+  display: flex;
+  padding: 1.5rem;
+  gap: 2rem;
+}
+
+.engineering-main {
+  flex: 2;
+}
+
+.engineering-sidebar {
+  flex: 1;
+}
+
+.engineering-section {
+  margin-bottom: 1.5rem;
+}
+
+.engineering-title {
+  color: #0369a1;
+  border-color: #0369a1;
+}
+
+.engineering-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.engineering-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.engineering-company {
+  color: #0369a1;
+  font-weight: 500;
+  margin: 0.25rem 0;
+}
+
+.engineering-list {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.engineering-tech {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+.engineering-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.engineering-skill {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.engineering-edu {
+  margin-bottom: 1rem;
+}
+
+.engineering-edu strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #0369a1;
+}
+
+.engineering-edu p {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+.engineering-edu small {
+  color: #64748b;
+}
+
+/* =====================================================
+   TEMPLATE 18: Consultant Elite
+   ===================================================== */
+
+.resume-template.consultant {
+  font-family: 'Lato', 'Arial', sans-serif;
+}
+
+.consultant-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.consultant-header .rt-name {
+  font-weight: 300;
+  font-size: 2.5rem;
+  color: #115e59;
+}
+
+.consultant-header .rt-title {
+  font-size: 1rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.consultant-separator {
+  width: 100px;
+  height: 3px;
+  background: #115e59;
+  margin: 1rem auto;
+}
+
+.consultant-contact {
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.consultant-section {
+  margin-bottom: 1.5rem;
+}
+
+.consultant-title {
+  color: #115e59;
+  border-color: #115e59;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+}
+
+.consultant-summary {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 0 2rem;
+}
+
+.consultant-expertise {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem 1rem;
+}
+
+.consultant-expertise-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.consultant-check {
+  color: #115e59;
+  font-weight: bold;
+}
+
+.consultant-item {
+  margin-bottom: 1.25rem;
+}
+
+.consultant-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.consultant-client {
+  color: #115e59;
+  font-weight: 500;
+}
+
+.consultant-date {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.consultant-results {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.consultant-results li {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.consultant-edu {
+  margin-bottom: 0.5rem;
+}
+
+.consultant-edu span {
+  color: #64748b;
+  margin-left: 0.5rem;
+}
+
+/* =====================================================
+   TEMPLATE 19: Fresh Graduate
+   ===================================================== */
+
+.resume-template.graduate {
+  font-family: 'Open Sans', 'Arial', sans-serif;
+}
+
+.graduate-header {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: white;
+  border-radius: 0 0 30px 30px;
+  margin: -0.5in -0.5in 1.5rem -0.5in;
+}
+
+.graduate-header .rt-name {
+  color: white;
+}
+
+.graduate-header .rt-title {
+  color: rgba(255,255,255,0.9);
+}
+
+.graduate-contact {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.graduate-contact span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.graduate-section {
+  margin-bottom: 1.5rem;
+}
+
+.graduate-title {
+  color: #059669;
+  border-color: #059669;
+}
+
+.graduate-item {
+  margin-bottom: 1rem;
+}
+
+.graduate-school {
+  color: #059669;
+  font-weight: 500;
+  margin: 0.25rem 0;
+}
+
+.graduate-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.graduate-date {
+  font-size: 0.85rem;
+  color: #64748b;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.graduate-tech {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.graduate-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.graduate-skill {
+  background: #d1fae5;
+  color: #059669;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* =====================================================
+   TEMPLATE 20: Premium Executive
+   ===================================================== */
+
+.resume-template.premium {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  background: #fffcf7;
+}
+
+.premium-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+}
+
+.premium-name-section .rt-name {
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #78350f;
+}
+
+.premium-title-text {
+  color: #92400e;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.premium-contact-section {
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #78350f;
+}
+
+.premium-contact-item {
+  margin-bottom: 0.25rem;
+}
+
+.premium-gold-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #78350f, #d97706, #78350f);
+  margin-bottom: 1.5rem;
+}
+
+.premium-section {
+  margin-bottom: 1.5rem;
+}
+
+.premium-section-title {
+  color: #78350f;
+  border-color: #78350f;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.premium-summary {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.premium-strengths {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.premium-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.premium-diamond {
+  color: #d97706;
+}
+
+.premium-item {
+  margin-bottom: 1.25rem;
+}
+
+.premium-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.premium-item-header .rt-item-title {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.premium-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #92400e;
+}
+
+.premium-company {
+  color: #78350f;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.premium-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.premium-achievements {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.75rem;
+}
+
+.premium-achievements li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+.premium-bullet {
+  color: #d97706;
+}
+
+.premium-edu {
+  margin-bottom: 0.75rem;
+}
+
+.premium-edu strong {
+  display: block;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.premium-institution {
+  color: #78350f;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
+/* =====================================================
+   PRINT STYLES
+   ===================================================== */
+
+@media print {
+  .resume-template {
+    box-shadow: none;
+    padding: 0.25in;
+  }
+  
+  .resume-template.tech,
+  .resume-template.artistic,
+  .resume-template.sidebar-layout,
+  .resume-template.engineering {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* =====================================================
+   RESPONSIVE ADJUSTMENTS
+   ===================================================== */
+
+@media screen and (max-width: 768px) {
+  .resume-template {
+    padding: 0.25in;
+    font-size: 10pt;
+  }
+  
+  .rt-name {
+    font-size: 1.5rem;
+  }
+  
+  .resume-template.tech,
+  .resume-template.artistic,
+  .resume-template.sidebar-layout {
+    flex-direction: column;
+  }
+  
+  .tech-sidebar,
+  .artistic-sidebar,
+  .sidebar-left {
+    width: 100%;
+  }
+  
+  .engineering-body {
+    flex-direction: column;
+  }
+  
+  .consultant-expertise {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .premium-strengths {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .startup-projects,
+  .tech-projects {
+    grid-template-columns: 1fr;
+  }
+}

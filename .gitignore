@@ -1,0 +1,16 @@
+resume-builder/node_modules/
+resume-builder/dist/
+resume-builder/.env
+resume-builder/.env.*
+!resume-builder/.env.example
+
+resume-builder-backend/target/
+resume-builder-backend/.env
+resume-builder-backend/.env.*
+!resume-builder-backend/.env.example
+
+.env
+.env.*
+!.env.example
+
+*.log
