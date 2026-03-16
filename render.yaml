@@ -1,7 +1,7 @@
 services:
   - type: web
     name: resume-builder-backend
-    runtime: java
+    env: java
     rootDir: resume-builder-backend
     buildCommand: mvn clean package -DskipTests
     startCommand: java -jar target/resume-builder-backend-1.0.0.jar
@@ -32,11 +32,12 @@ services:
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
 
-  - type: static
+  - type: web
     name: resume-builder-frontend
+    env: static
     rootDir: resume-builder
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     routes:
       - type: rewrite
         source: /*
