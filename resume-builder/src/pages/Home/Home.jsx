@@ -170,10 +170,12 @@ const Home = () => {
             <span className="gradient-text">AI-Powered</span> Precision
           </motion.h1>
 
-          <motion.p variants={fadeInUp} className="hero-subtitle">
-            Create stunning, ATS-optimized resumes in minutes. Our intelligent platform 
-            transforms your experience into a compelling story that lands interviews.
-          </motion.p>
+          <motion.div variants={fadeInUp} className="hero-copy-wrap">
+            <p className="hero-subtitle">
+              Create stunning, ATS-optimized resumes in minutes. Our intelligent platform
+              transforms your experience into a compelling story that lands interviews.
+            </p>
+          </motion.div>
 
           <motion.div variants={fadeInUp} className="action-buttons">
             <Link to="/builder" className="action-btn action-btn-primary">
