@@ -19,19 +19,25 @@ services:
       - key: CORS_ALLOWED_ORIGINS
         value: https://resume-builder-frontend.onrender.com
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:h2:file:./data/resume-builder-db;MODE=MySQL;DB_CLOSE_DELAY=-1
+        value: jdbc:postgresql://ep-super-bird-amsh9ogy-pooler.c-5.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_HtTu1ymMNKh6&sslmode=require&channelBinding=require
       - key: SPRING_DATASOURCE_USERNAME
-        value: sa
+        value: neondb_owner
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ""
+        value: npg_HtTu1ymMNKh6
       - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-        value: org.h2.Driver
+        value: org.postgresql.Driver
       - key: SPRING_JPA_DIALECT
-        value: org.hibernate.dialect.H2Dialect
+        value: org.hibernate.dialect.PostgreSQLDialect
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
       - key: PORT
         value: 10000
+      - key: RAPIDAPI_JOBS_BASE_URL
+        value: https://jsearch.p.rapidapi.com/search
+      - key: RAPIDAPI_JOBS_HOST
+        value: jsearch.p.rapidapi.com
+      - key: RAPIDAPI_JOBS_KEY
+        value: e4fb638178msh1d7c9c2937bc053p1c3ed9jsn57e97905fb87
 
   - type: web
     name: resume-builder-frontend

@@ -6,3 +6,5 @@ export { default as contextService } from './contextService';
 export { default as suggestionsService } from './suggestionsService';
 export { default as interviewService } from './interviewService';
 export { default as userService } from './userService';
+export { default as jobService } from './jobService';
+export { default as applicationService } from './applicationService';

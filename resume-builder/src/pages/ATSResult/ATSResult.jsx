@@ -184,7 +184,6 @@ const ATSResult = () => {
     } else if (resumeData) {
       analyzeResumeLocally();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeData, jobContext, currentResumeId]);
 
   useEffect(() => {

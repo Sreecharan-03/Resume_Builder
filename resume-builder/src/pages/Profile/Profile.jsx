@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
+import { useResume } from '../../context/ResumeContext';
 import { resumeService, userService } from '../../services';
 import {
   FileText,
@@ -37,6 +38,7 @@ const Profile = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+  const { refreshTrigger } = useResume();
   const [loading, setLoading] = useState(true);
   const [resumeHistory, setResumeHistory] = useState([]);
 
@@ -48,23 +50,54 @@ const Profile = () => {
   }, [isAuthenticated, navigate]);
 
   // Fetch user resumes
+  const fetchResumes = async () => {
+    if (!isAuthenticated) return;
+    try {
+      setLoading(true);
+      const result = await resumeService.getAllResumes();
+      if (result.success) {
+        const resumeData = result.data?.resumes || result.data || [];
+        setResumeHistory(Array.isArray(resumeData) ? resumeData : []);
+      } else {
+        setResumeHistory([]);
+      }
+    } catch (error) {
+      console.error('Failed to fetch resumes:', error);
+      setResumeHistory([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchResumes = async () => {
-      if (!isAuthenticated) return;
-      try {
-        const result = await resumeService.getAllResumes();
-        if (result.success) {
-          const resumeData = result.data?.resumes || result.data || [];
-          setResumeHistory(Array.isArray(resumeData) ? resumeData : []);
-        }
-      } catch (error) {
-        console.error('Failed to fetch resumes:', error);
-      } finally {
-        setLoading(false);
+    fetchResumes();
+  }, [isAuthenticated, refreshTrigger]);
+
+  useEffect(() => {
+    const handleResumeUpdated = () => {
+      if (isAuthenticated) fetchResumes();
+    };
+
+    const handleWindowFocus = () => {
+      if (isAuthenticated) fetchResumes();
+    };
+
+    const handleStorageChange = (event) => {
+      if (event.key === 'resumeLastUpdatedAt' && isAuthenticated) {
+        fetchResumes();
       }
     };
-    fetchResumes();
-  }, [isAuthenticated]);
+
+    window.addEventListener('resume-updated', handleResumeUpdated);
+    window.addEventListener('focus', handleWindowFocus);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('resume-updated', handleResumeUpdated);
+      window.removeEventListener('focus', handleWindowFocus);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [isAuthenticated, refreshTrigger]);
 
   const nameParts = (user?.fullName || 'User').split(' ');
   const [formData, setFormData] = useState({

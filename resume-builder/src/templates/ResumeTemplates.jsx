@@ -2,84 +2,96 @@
 // CUSTOM TEMPLATES FROM SCREENSHOTS
 // ===============================
 
+const toTextList = (items = []) =>
+  (items || []).map((item) => (typeof item === 'string' ? item : item?.name || item?.language || '')).filter(Boolean).join(', ');
+
+const toBulletLines = (text = '') =>
+  String(text || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+
 // 1. Data Scientist / Junior Developer (screenshot 1)
 export const DataScientistTemplate = ({ data }) => (
-  <div className="resume-template datasci">
-    <div className="datasci-header">
-      <div className="datasci-header-left">
-        <div className="datasci-contact">
-          <div>{data.personal?.phone || '(xxx) xxx-xxxx'}</div>
-          <div>{data.personal?.location || 'somewhere, state'}</div>
-          <div>{data.personal?.email || 'yourname@email.com'}</div>
-        </div>
+  <div className="resume-template basic-template basic-template-a">
+    <header className="basic-header center">
+      <h1 className="basic-name">{data.personal?.fullName || 'Your Name'}</h1>
+      <div className="basic-contact-line">
+        {[data.personal?.phone, data.personal?.email, data.personal?.location, data.codingProfiles?.linkedin]
+          .filter(Boolean)
+          .join(' | ')}
       </div>
-      <div className="datasci-header-center">
-        <h1>{data.personal?.fullName || 'Vutukuri Sree charan'}</h1>
-        <div className="datasci-title">{data.personal?.title || 'Data Scientist / Junior Developer'}</div>
-      </div>
-      <div className="datasci-header-right">
-        <div className="datasci-profiles">
-          <div>Portfolio: {data.personal?.website || 'MathtoData.com'}</div>
-          <div>{data.codingProfiles?.github || 'github.com/TimmyChan'}</div>
-          <div>{data.codingProfiles?.linkedin || 'linkedin.com/in/timmy-chan'}</div>
-        </div>
-      </div>
-    </div>
-    <div className="datasci-summary">{data.personal?.summary || 'Hello, here is some text without a meaning...'}</div>
-    <div className="datasci-section datasci-skills">
-      <div className="datasci-section-title">SKILLS</div>
-      <div className="datasci-skills-table">
-        <div><b>Tools and Languages</b><br/>Python, Git, \LaTeX, MarkDown, PHP</div>
-        <div><b>Quantitative Research</b><br/>Mathematical optimization, Mathematical Modeling, R, MySQL</div>
-        <div><b>Communication</b><br/>English, Cantonese (fluent speaker), Chinese (reading and writing)</div>
-      </div>
-    </div>
-    <div className="datasci-section">
-      <div className="datasci-section-title">TECHNICAL EXPERIENCE</div>
-      {/* Experience blocks */}
-      {(data.experience || [1,2,3,4]).map((exp, i) => (
-        <div key={i} className="datasci-exp-block">
-          <div className="datasci-exp-row">
-            <div className="datasci-exp-role">{exp.jobTitle || exp.position || 'ROLE / PROJECT ' + String.fromCharCode(65+i)}</div>
-            <div className="datasci-exp-company">{exp.company || 'company/' + String.fromCharCode(65+i)}</div>
-            <div className="datasci-exp-dates">{exp.startDate || 'MMM YYYY'} — {exp.endDate || (i===0 ? 'Present' : 'MMM YYYY')}</div>
-            <div className="datasci-exp-location">{exp.location || 'somewhere, state'}</div>
+    </header>
+
+    {data.personal?.summary && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Summary</h2>
+        <p className="basic-text">{data.personal.summary}</p>
+      </section>
+    )}
+
+    {data.education?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Education</h2>
+        {data.education.map((edu, i) => (
+          <div key={i} className="basic-item">
+            <div className="basic-item-row">
+              <strong>{edu.institution}</strong>
+              <span>{formatDateRange(edu.startDate, edu.endDate)}</span>
+            </div>
+            <div className="basic-text">{edu.degree}{edu.field ? ` | ${edu.field}` : ''}{edu.gpa ? ` | GPA: ${edu.gpa}` : ''}</div>
           </div>
-          <ul className="datasci-exp-list">
-            {(exp.description ? exp.description.split('\n') : [
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-              'Suspendisse pretium elit quis ullamcorper ultricies.',
-              'Morbi a nisl sit amet massa ultricies fermentum.',
-              'Sed a diam et turpis tempor venenatis eget eget ipsum.',
-              'Vestibulum fermentum justo vitae aliquet accumsan.'
-            ]).map((item, idx) => <li key={idx}>{item}</li>)}
-          </ul>
-        </div>
-      ))}
-    </div>
-    <div className="datasci-section">
-      <div className="datasci-section-title">EDUCATION</div>
-      {(data.education || [1,2]).map((edu, i) => (
-        <div key={i} className="datasci-edu-block">
-          <b>{edu.degree || (i===0 ? 'Master of Arts in Mathematics, Texas Institute of Technology & Science' : 'Bachelor of Arts in Mathematics, Somewhere Technical Institute')}</b>
-          <span className="datasci-edu-date">{edu.endDate || (i===0 ? 'MMM 2021' : 'MMM YYYY')}</span><br/>
-          <span>{edu.institution || (i===0 ? '' : 'University Fellowship, University of Motherland')}</span>
-        </div>
-      ))}
-    </div>
-    <div className="datasci-section">
-      <div className="datasci-section-title">ACTIVITIES</div>
-      <ul className="datasci-activities">
-        {(data.activities || [
-          'Graduate Student Council Representative',
-          'Academic Student Association: Some Workshop, Creator/Facilitator',
-          'City Symposium Series, University of Motherland, Poster Presenter',
-          'College of Science and Engineering Student Project Showcase, Research Presenter',
-          'Graduate Research and Creative Works Showcase, State University, Research Presenter',
-          'Some Coding Sprint, University of Some Other State'
-        ]).map((act, i) => <li key={i}>{act}</li>)}
-      </ul>
-    </div>
+        ))}
+      </section>
+    )}
+
+    {data.skills?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Skills</h2>
+        <p className="basic-text">{toTextList(data.skills)}</p>
+      </section>
+    )}
+
+    {data.projects?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Projects</h2>
+        {data.projects.map((project, i) => (
+          <div key={i} className="basic-item">
+            <strong>{project.name}</strong>
+            {project.description && (
+              <ul className="basic-list">
+                {toBulletLines(project.description).map((line, idx) => (
+                  <li key={idx}>{line}</li>
+                ))}
+              </ul>
+            )}
+            {project.technologies && <div className="basic-text"><strong>Technologies:</strong> {project.technologies}</div>}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {data.certifications?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Certifications</h2>
+        <ul className="basic-list">
+          {data.certifications.map((cert, i) => (
+            <li key={i}>{cert.name}{cert.issuer ? ` - ${cert.issuer}` : ''}{cert.date ? ` (${cert.date})` : ''}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {data.codingProfiles && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Coding Profiles</h2>
+        <p className="basic-text">
+          {[data.codingProfiles.leetcode, data.codingProfiles.codechef, data.codingProfiles.codeforces, data.codingProfiles.hackerrank]
+            .filter(Boolean)
+            .join(' | ')}
+        </p>
+      </section>
+    )}
   </div>
 );
 
@@ -87,48 +99,83 @@ export const DataScientistTemplate = ({ data }) => (
 // TEMPLATE: Classic Academic Table (screenshot style)
 // =====================================================
 export const ClassicAcademicTemplate = ({ data }) => (
-  <div className="resume-template classic-academic">
-    <header className="rt-header classic-header">
-      <h1 className="rt-name">{data.personal?.fullName || 'First Name Last Name'}</h1>
-      <div className="rt-contact classic-contact">
-        <span>{data.personal?.phone}</span>
-        <span>{data.personal?.email}</span>
-        <span>{data.personal?.location}</span>
+  <div className="resume-template basic-template basic-template-b">
+    <header className="basic-header">
+      <h1 className="basic-name uppercase">{(data.personal?.fullName || 'Your Name').toUpperCase()}</h1>
+      <div className="basic-contact-line center">
+        {[data.personal?.location, data.personal?.email, data.personal?.phone].filter(Boolean).join(' | ')}
       </div>
     </header>
 
-    <section className="rt-section">
-      <h2 className="rt-section-title">Education</h2>
-      <table className="academic-table">
-        <thead>
-          <tr><th>Year</th><th>Degree / Certificate</th><th>Institute</th><th>CGPA</th></tr>
-        </thead>
-        <tbody>
-          {(data.education || []).map((edu, i) => (
-            <tr key={i}>
-              <td>{edu.startDate || ''} - {edu.endDate || ''}</td>
-              <td>{edu.degree}</td>
-              <td>{edu.institution}</td>
-              <td>{edu.gpa || ''}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    {data.personal?.summary && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Summary</h2>
+        <p className="basic-text">{data.personal.summary}</p>
+      </section>
+    )}
 
-    <section className="rt-section">
-      <h2 className="rt-section-title">Experience</h2>
-      {(data.experience || []).map((exp, i) => (
-        <div key={i} className="rt-item">
-          <div className="rt-item-header">
-            <h3 className="rt-item-title">{exp.position || exp.jobTitle}</h3>
-            <span className="rt-item-date">{formatDateRange(exp.startDate, exp.endDate)}</span>
+    {data.education?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Education</h2>
+        {data.education.map((edu, i) => (
+          <div key={i} className="basic-item compact">
+            <div className="basic-item-row">
+              <strong>{edu.institution}</strong>
+              <span>{formatDateRange(edu.startDate, edu.endDate)}</span>
+            </div>
+            <div className="basic-text">{edu.degree}{edu.field ? ` (${edu.field})` : ''}{edu.gpa ? ` | ${edu.gpa}` : ''}</div>
           </div>
-          <p className="rt-item-subtitle">{exp.company} • {exp.location}</p>
-          {exp.description && <p className="rt-item-desc">{exp.description}</p>}
-        </div>
-      ))}
-    </section>
+        ))}
+      </section>
+    )}
+
+    {data.projects?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Projects</h2>
+        {data.projects.map((project, i) => (
+          <div key={i} className="basic-item compact">
+            <strong>{project.name}</strong>
+            {project.description && (
+              <ul className="basic-list">
+                {toBulletLines(project.description).map((line, idx) => (
+                  <li key={idx}>{line}</li>
+                ))}
+              </ul>
+            )}
+            {project.technologies && <div className="basic-text">Tools Used: {project.technologies}</div>}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {data.certifications?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Certifications</h2>
+        <ul className="basic-list">
+          {data.certifications.map((cert, i) => (
+            <li key={i}>{cert.name}{cert.issuer ? ` - ${cert.issuer}` : ''}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {data.skills?.length > 0 && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Skills</h2>
+        <p className="basic-text"><strong>Programming:</strong> {toTextList(data.skills)}</p>
+      </section>
+    )}
+
+    {data.codingProfiles && (
+      <section className="basic-section">
+        <h2 className="basic-section-title">Coding Profiles</h2>
+        <p className="basic-text">
+          {[data.codingProfiles.leetcode, data.codingProfiles.codechef, data.codingProfiles.codeforces, data.codingProfiles.hackerrank]
+            .filter(Boolean)
+            .join(', ')}
+        </p>
+      </section>
+    )}
   </div>
 );
 
@@ -136,23 +183,80 @@ export const ClassicAcademicTemplate = ({ data }) => (
 // TEMPLATE: Three Column Showcase (thumbnail style)
 // =====================================================
 export const ThreeColumnTemplate = ({ data }) => (
-  <div className="resume-template three-column">
-    <header className="rt-header threecol-header">
-      <h1 className="rt-name">{data.personal?.fullName}</h1>
-      <p className="rt-title">{data.personal?.title}</p>
+  <div className="resume-template basic-template basic-template-c">
+    <header className="basic-header">
+      <h1 className="basic-name">{(data.personal?.fullName || 'Your Name').toUpperCase()}</h1>
+      <div className="basic-contact-line">
+        {[data.personal?.email, data.personal?.phone, data.personal?.location].filter(Boolean).join(' | ')}
+      </div>
     </header>
-    <div className="threecol-body">
-      <div className="threecol-column">
-        <h3>Summary</h3>
-        <p>{data.personal?.summary}</p>
+
+    <div className="basic-two-col">
+      <div>
+        {data.personal?.summary && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Profile</h2>
+            <p className="basic-text">{data.personal.summary}</p>
+          </section>
+        )}
+
+        {data.projects?.length > 0 && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Projects</h2>
+            {data.projects.map((project, i) => (
+              <div key={i} className="basic-item">
+                <strong>{project.name}</strong>
+                <div className="basic-text">{project.description}</div>
+                {project.technologies && <div className="basic-text">{project.technologies}</div>}
+              </div>
+            ))}
+          </section>
+        )}
+
+        {data.codingProfiles && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Coding Profiles</h2>
+            <ul className="basic-list">
+              {[data.codingProfiles.leetcode, data.codingProfiles.codechef, data.codingProfiles.codeforces, data.codingProfiles.hackerrank]
+                .filter(Boolean)
+                .map((profile, i) => (
+                  <li key={i}>{profile}</li>
+                ))}
+            </ul>
+          </section>
+        )}
       </div>
-      <div className="threecol-column">
-        <h3>Experience</h3>
-        {(data.experience || []).slice(0,3).map((e,i)=>(<div key={i}><strong>{e.position}</strong><div>{e.company}</div></div>))}
-      </div>
-      <div className="threecol-column">
-        <h3>Skills</h3>
-        <div className="rt-skills">{(data.skills||[]).map((s,i)=>(<div key={i} className="rt-skill-tag">{typeof s==='string'?s:s.name}</div>))}</div>
+
+      <div>
+        {data.education?.length > 0 && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Education</h2>
+            {data.education.map((edu, i) => (
+              <div key={i} className="basic-item">
+                <strong>{edu.degree}, {edu.institution}</strong>
+                <div className="basic-text">{formatDateRange(edu.startDate, edu.endDate)}{edu.gpa ? ` | GPA: ${edu.gpa}` : ''}</div>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {data.skills?.length > 0 && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Skills</h2>
+            <p className="basic-text">{toTextList(data.skills)}</p>
+          </section>
+        )}
+
+        {data.certifications?.length > 0 && (
+          <section className="basic-section">
+            <h2 className="basic-section-title">Certificates</h2>
+            <ul className="basic-list">
+              {data.certifications.map((cert, i) => (
+                <li key={i}>{cert.name}{cert.issuer ? ` - ${cert.issuer}` : ''}</li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   </div>
@@ -262,11 +366,9 @@ export const ModernTemplate = ({ data }) => (
     {data.skills?.length > 0 && (
       <section className="rt-section">
         <h2 className="rt-section-title">Skills</h2>
-        <div className="rt-skills">
-          {data.skills.map((skill, i) => (
-            <span key={i} className="rt-skill-tag">{typeof skill === 'string' ? skill : skill.name}</span>
-          ))}
-        </div>
+        <p className="rt-plain-list">
+          {data.skills.map((skill) => (typeof skill === 'string' ? skill : skill.name)).join(', ')}
+        </p>
       </section>
     )}
     
@@ -301,11 +403,9 @@ export const ModernTemplate = ({ data }) => (
     {data.languages?.length > 0 && (
       <section className="rt-section">
         <h2 className="rt-section-title">Languages</h2>
-        <div className="rt-skills">
-          {data.languages.map((lang, i) => (
-            <span key={i} className="rt-skill-tag">{lang.language}{lang.proficiency ? ` (${lang.proficiency})` : ''}</span>
-          ))}
-        </div>
+        <p className="rt-plain-list">
+          {data.languages.map((lang) => `${lang.language}${lang.proficiency ? ` (${lang.proficiency})` : ''}`).join(', ')}
+        </p>
       </section>
     )}
     
@@ -377,16 +477,9 @@ export const CreativeTemplate = ({ data }) => (
           <div className="creative-section-icon">🎯</div>
           <div className="creative-section-content">
             <h2 className="rt-section-title">Skills & Expertise</h2>
-            <div className="creative-skills">
-              {data.skills.map((skill, i) => (
-                <div key={i} className="creative-skill-item">
-                  <span className="creative-skill-name">{typeof skill === 'string' ? skill : skill.name}</span>
-                  <div className="creative-skill-bar">
-                    <div className="creative-skill-fill" style={{ width: '85%' }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="rt-plain-list">
+              {data.skills.map((skill) => (typeof skill === 'string' ? skill : skill.name)).join(', ')}
+            </p>
           </div>
         </section>
       )}
@@ -442,11 +535,9 @@ export const CreativeTemplate = ({ data }) => (
           <div className="creative-section-icon">🌐</div>
           <div className="creative-section-content">
             <h2 className="rt-section-title">Languages</h2>
-            <div className="rt-skills">
-              {data.languages.map((lang, i) => (
-                <span key={i} className="rt-skill-tag">{lang.language}{lang.proficiency ? ` (${lang.proficiency})` : ''}</span>
-              ))}
-            </div>
+            <p className="rt-plain-list">
+              {data.languages.map((lang) => `${lang.language}${lang.proficiency ? ` (${lang.proficiency})` : ''}`).join(', ')}
+            </p>
           </div>
         </section>
       )}

@@ -36,17 +36,19 @@ public class AuthService {
 
     @Transactional
     public AuthDTO.AuthResponse register(AuthDTO.RegisterRequest request) {
+        String normalizedEmail = request.getEmail().trim().toLowerCase();
+
         // Check if email already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
             throw new IllegalArgumentException("Email already registered");
         }
 
         // Create new user
-        String username = request.getEmail().split("@")[0]; // Generate username from email
+        String username = normalizedEmail.split("@")[0]; // Generate username from email
         User user = User.builder()
                 .username(username)
-                .fullName(request.getFullName())
-                .email(request.getEmail())
+                .fullName(request.getFullName().trim())
+                .email(normalizedEmail)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(User.Role.USER)
                 .enabled(true)
@@ -65,14 +67,16 @@ public class AuthService {
     }
 
     public AuthDTO.AuthResponse login(AuthDTO.LoginRequest request) {
+        String normalizedEmail = request.getEmail().trim().toLowerCase();
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        normalizedEmail,
                         request.getPassword()
                 )
         );
 
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
@@ -85,13 +89,15 @@ public class AuthService {
     }
 
     public AuthDTO.UserInfo getCurrentUser(String email) {
-        User user = userRepository.findByEmail(email)
+        String normalizedEmail = email.trim().toLowerCase();
+        User user = userRepository.findByEmailIgnoreCase(normalizedEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return mapToUserInfo(user);
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
+        String normalizedEmail = email.trim().toLowerCase();
+        return userRepository.findByEmailIgnoreCase(normalizedEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 

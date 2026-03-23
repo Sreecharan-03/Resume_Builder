@@ -3,8 +3,9 @@ package com.resumebuilder.service;
 import com.resumebuilder.dto.TemplateDTO;
 import com.resumebuilder.model.Template;
 import com.resumebuilder.repository.TemplateRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +24,12 @@ public class TemplateService {
     
     /**
      * Initialize default templates if none exist
+     * Disabled for now, will be enabled once database schema is properly set up
      */
-    @PostConstruct
-    @Transactional
+    //@EventListener(ApplicationReadyEvent.class)
     public void initializeTemplates() {
-        if (templateRepository.count() == 0) {
-            createDefaultTemplates();
-        }
+        // Disabled initialization
+        // Templates can be added manually or re-enabled once schema issues are resolved
     }
     
     private void createDefaultTemplates() {

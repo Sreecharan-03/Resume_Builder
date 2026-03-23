@@ -18,6 +18,17 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Avoid stale browser/proxy caches for dynamic GET endpoints.
+    if ((config.method || '').toLowerCase() === 'get') {
+      config.params = {
+        ...(config.params || {}),
+        _t: Date.now(),
+      };
+      config.headers['Cache-Control'] = 'no-cache';
+      config.headers.Pragma = 'no-cache';
+    }
+
     return config;
   },
   (error) => {

@@ -1,10 +1,102 @@
 /* ===============================
    DATA SCIENTIST / JUNIOR DEV TEMPLATE
    =============================== */
+.basic-template {
+  background: #fff;
+  color: #111;
+  font-family: 'Times New Roman', Georgia, serif;
+  padding: 0.42in;
+  line-height: 1.35;
+}
+
+.basic-header {
+  margin-bottom: 0.5rem;
+}
+
+.basic-header.center,
+.basic-contact-line.center {
+  text-align: center;
+}
+
+.basic-name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.basic-name.uppercase {
+  letter-spacing: 0.2px;
+}
+
+.basic-contact-line {
+  margin-top: 0.15rem;
+  font-size: 0.92rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+.basic-section {
+  margin-top: 0.42rem;
+}
+
+.basic-section-title {
+  margin: 0 0 0.22rem 0;
+  font-size: 1.55rem;
+  font-weight: 700;
+  border-bottom: 1px solid #111;
+  color: #111;
+}
+
+.basic-item {
+  margin-bottom: 0.28rem;
+}
+
+.basic-item.compact {
+  margin-bottom: 0.2rem;
+}
+
+.basic-item-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.basic-text {
+  margin: 0.08rem 0;
+  font-size: 0.93rem;
+}
+
+.basic-list {
+  margin: 0.12rem 0 0.22rem 1rem;
+  padding: 0;
+  font-size: 0.92rem;
+}
+
+.basic-list li {
+  margin: 0.1rem 0;
+}
+
+.basic-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.basic-template-c .basic-name {
+  text-align: left;
+  font-size: 1.75rem;
+}
+
+.basic-template-c .basic-contact-line {
+  text-align: left;
+}
+
 .resume-template.datasci {
-  background: #232a34;
-  color: #fff;
-  font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+  background: #fff;
+  color: #111;
+  font-family: 'Times New Roman', Georgia, serif;
   padding: 0.6in 0.5in;
   min-height: 11in;
 }
@@ -12,13 +104,13 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 2px solid #3b4252;
+  border-bottom: 1px solid #111;
   padding-bottom: 0.5rem;
   margin-bottom: 1.2rem;
 }
 .datasci-header-left, .datasci-header-right {
   font-size: 0.92rem;
-  color: #c6d0d8;
+  color: #111;
   min-width: 120px;
 }
 .datasci-header-center {
@@ -29,17 +121,17 @@
   font-size: 1.9rem;
   font-weight: 700;
   margin: 0;
-  color: #fff;
+  color: #111;
 }
 .datasci-title {
   font-size: 1.1rem;
-  color: #a3e635;
-  font-weight: 500;
+  color: #111;
+  font-weight: 600;
 }
 .datasci-summary {
   margin: 0.8rem 0 1rem 0;
   font-size: 1.02rem;
-  color: #e7eef6;
+  color: #111;
   font-weight: 400;
 }
 .datasci-section {
@@ -48,9 +140,15 @@
 .datasci-section-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #a3e635;
+  color: #111;
+  border-bottom: 1px solid #111;
   margin-bottom: 0.3rem;
   letter-spacing: 0.5px;
+}
+.datasci-plain-text {
+  font-size: 0.98rem;
+  color: #111;
+  line-height: 1.5;
 }
 .datasci-skills-table {
   display: flex;
@@ -69,32 +167,32 @@
   display: flex;
   gap: 1.2rem;
   font-size: 1rem;
-  color: #e0e7ef;
+  color: #111;
   font-weight: 500;
 }
 .datasci-exp-role { min-width: 120px; }
 .datasci-exp-company { min-width: 120px; }
-.datasci-exp-dates { min-width: 120px; color: #a3e635; }
+.datasci-exp-dates { min-width: 120px; color: #111; }
 .datasci-exp-location { min-width: 120px; }
 .datasci-exp-list {
   margin: 0.2rem 0 0.5rem 1.2rem;
-  color: #bfc9d1;
+  color: #111;
   font-size: 0.97rem;
 }
 .datasci-edu-block {
   margin-bottom: 0.3rem;
-  color: #e0e7ef;
+  color: #111;
   font-size: 1rem;
 }
 .datasci-edu-date {
   float: right;
-  color: #a3e635;
+  color: #111;
   font-size: 0.97rem;
   margin-left: 1.2rem;
 }
 .datasci-activities {
   margin: 0.2rem 0 0.5rem 1.2rem;
-  color: #bfc9d1;
+  color: #111;
   font-size: 0.97rem;
 }
 
@@ -237,18 +335,28 @@
 }
 
 .rt-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: block;
 }
 
 .rt-skill-tag {
-  background: #f3f4f6;
-  color: #111827;
-  padding: 0.28rem 0.8rem;
-  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
   font-size: 0.86rem;
-  border: 1px solid rgba(16,24,40,0.04);
+  border: 0;
+  display: inline;
+}
+
+.rt-skill-tag:not(:last-child)::after {
+  content: ', ';
+}
+
+.rt-plain-list {
+  font-size: 0.92rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.5;
 }
 
 .rt-tech {
@@ -277,8 +385,48 @@
 }
 
 .resume-template.modern .rt-skill-tag {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: transparent;
+  color: inherit;
+}
+
+.executive-skill,
+.bold-skill,
+.corporate-skill,
+.tech-skill-badge,
+.tech-mini-badge {
+  background: transparent !important;
+  color: inherit !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  display: inline !important;
+  box-shadow: none !important;
+}
+
+.executive-skill:not(:last-child)::after,
+.bold-skill:not(:last-child)::after,
+.corporate-skill:not(:last-child)::after,
+.tech-skill-badge:not(:last-child)::after,
+.tech-mini-badge:not(:last-child)::after {
+  content: ', ';
+}
+
+.creative-skill-bar,
+.creative-skill-fill {
+  display: none !important;
+}
+
+.creative-skills {
+  display: block !important;
+}
+
+.creative-skill-item {
+  display: inline !important;
+}
+
+.creative-skill-item:not(:last-child)::after {
+  content: ', ';
 }
 
 /* =====================================================

@@ -21,33 +21,21 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<AuthDTO.AuthResponse>> register(
             @Valid @RequestBody AuthDTO.RegisterRequest request) {
-        try {
-            AuthDTO.AuthResponse response = authService.register(request);
-            return ResponseEntity.ok(ApiResponse.success("Registration successful", response));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
-        }
+        AuthDTO.AuthResponse response = authService.register(request);
+        return ResponseEntity.ok(ApiResponse.success("Registration successful", response));
     }
-    
+
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthDTO.AuthResponse>> login(
             @Valid @RequestBody AuthDTO.LoginRequest request) {
-        try {
-            AuthDTO.AuthResponse response = authService.login(request);
-            return ResponseEntity.ok(ApiResponse.success("Login successful", response));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
-        }
+        AuthDTO.AuthResponse response = authService.login(request);
+        return ResponseEntity.ok(ApiResponse.success("Login successful", response));
     }
-    
+
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<AuthDTO.UserInfo>> getCurrentUser(Authentication authentication) {
-        try {
-            String email = authentication.getName();
-            AuthDTO.UserInfo response = authService.getCurrentUser(email);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
-        }
+        String email = authentication.getName();
+        AuthDTO.UserInfo response = authService.getCurrentUser(email);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

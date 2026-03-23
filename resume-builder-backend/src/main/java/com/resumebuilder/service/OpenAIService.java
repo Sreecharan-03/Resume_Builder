@@ -337,6 +337,128 @@ public class OpenAIService {
     }
 
     /**
+     * Generate job-specific application content.
+     */
+    public Map<String, String> generateJobApplicationContent(String resumeText, String jobDescription, String jobTitle, String company) {
+        String prompt = String.format("""
+            You are an expert career coach.
+
+            Generate a JSON object with exactly these keys:
+            - coverLetter
+            - whyFit
+            - skillsSummary
+
+            Instructions:
+            - coverLetter: 180-240 words, professional, specific to the role.
+            - whyFit: 3-5 bullet points in plain text separated by new lines.
+            - skillsSummary: 90-140 words summarizing the strongest relevant skills.
+            - Return valid JSON only, no markdown.
+
+            Job Title: %s
+            Company: %s
+
+            Job Description:
+            %s
+
+            Candidate Resume Content:
+            %s
+            """,
+                jobTitle != null ? jobTitle : "Software Engineer",
+                company != null ? company : "Company",
+                jobDescription != null ? jobDescription : "",
+                resumeText != null ? resumeText : "");
+
+        String response = callOpenAI(prompt);
+
+        try {
+            String cleanResponse = cleanJsonResponse(response);
+            JsonNode root = objectMapper.readTree(cleanResponse);
+            Map<String, String> generated = new HashMap<>();
+            generated.put("coverLetter", root.path("coverLetter").asText(""));
+            generated.put("whyFit", root.path("whyFit").asText(""));
+            generated.put("skillsSummary", root.path("skillsSummary").asText(""));
+            if (generated.get("coverLetter").isBlank() || generated.get("whyFit").isBlank() || generated.get("skillsSummary").isBlank()) {
+                return getDefaultApplicationContent(jobTitle, company);
+            }
+            return generated;
+        } catch (Exception e) {
+            logger.error("Error parsing AI application content: {}", e.getMessage());
+            return getDefaultApplicationContent(jobTitle, company);
+        }
+    }
+
+    private Map<String, String> getDefaultApplicationContent(String jobTitle, String company) {
+        String safeJobTitle = jobTitle != null && !jobTitle.isBlank() ? jobTitle : "Software Engineer";
+        String safeCompany = company != null && !company.isBlank() ? company : "your company";
+
+        Map<String, String> fallback = new HashMap<>();
+        fallback.put(
+                "coverLetter",
+                "Dear Hiring Manager,\n\n" +
+                        "I am excited to apply for the " + safeJobTitle + " role at " + safeCompany + ". " +
+                        "My resume demonstrates practical experience delivering robust software solutions, collaborating across teams, and improving product quality through measurable outcomes. " +
+                        "I have worked on projects that required problem-solving, ownership, and clear communication with both technical and non-technical stakeholders.\n\n" +
+                        "In previous work, I focused on building scalable features, writing maintainable code, and continuously improving performance and reliability. " +
+                        "I am especially motivated by opportunities where I can contribute quickly, learn from strong engineering teams, and help deliver customer impact.\n\n" +
+                        "Thank you for your time and consideration. I would welcome the opportunity to discuss how my background aligns with your needs.\n\n" +
+                        "Sincerely,\nCandidate"
+        );
+        fallback.put(
+                "whyFit",
+                "- Relevant hands-on project and development experience\n" +
+                        "- Strong alignment with role responsibilities and required technologies\n" +
+                        "- Proven problem-solving and collaboration mindset\n" +
+                        "- Focus on delivering measurable, business-relevant outcomes"
+        );
+        fallback.put(
+                "skillsSummary",
+                "The candidate offers a balanced blend of technical execution, communication, and delivery focus. " +
+                        "Their background shows practical application of modern development practices, including clean implementation, iterative improvement, and alignment to real job requirements. " +
+                        "This profile is well-suited for teams that value ownership, adaptability, and reliable output in fast-moving environments."
+        );
+        return fallback;
+    }
+
+    /**
+     * Extract top skills from arbitrary text using AI with fallback-safe behavior.
+     */
+    public List<String> extractSkillsFromText(String text, int maxSkills) {
+        if (text == null || text.isBlank()) {
+            return List.of();
+        }
+
+        int safeMaxSkills = Math.max(5, Math.min(maxSkills, 30));
+        String prompt = String.format("""
+            Extract the top %d most relevant technical and domain skills from this text.
+
+            Output format rules:
+            - Return ONLY a JSON array of strings.
+            - Use concise skill names.
+            - No markdown.
+
+            Text:
+            %s
+            """, safeMaxSkills, text.length() > 6000 ? text.substring(0, 6000) : text);
+
+        String response = callOpenAI(prompt);
+        try {
+            String cleanResponse = cleanJsonResponse(response);
+            @SuppressWarnings("unchecked")
+            List<String> parsed = objectMapper.readValue(cleanResponse, List.class);
+            return parsed.stream()
+                    .filter(Objects::nonNull)
+                    .map(String::trim)
+                    .filter(s -> !s.isBlank())
+                    .distinct()
+                    .limit(safeMaxSkills)
+                    .toList();
+        } catch (Exception e) {
+            logger.warn("Failed to parse AI skills extraction response: {}", e.getMessage());
+            return List.of();
+        }
+    }
+
+    /**
      * AI-assisted ATS analysis for resume scoring
      */
     public Map<String, Object> analyzeResumeATS(String resumeText, String targetRole, String phase, String jobDescription, List<String> templateSections) {

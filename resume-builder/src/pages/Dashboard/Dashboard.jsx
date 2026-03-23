@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { resumeService, atsService } from '../../services';
+import { useResume } from '../../context/ResumeContext';
+import { resumeService, atsService, applicationService } from '../../services';
 import { 
   FileText, 
   Home,
@@ -34,6 +35,8 @@ import {
 import './Dashboard.css';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [resumes, setResumes] = useState([]);
@@ -41,8 +44,61 @@ const Dashboard = () => {
   const [atsAnalysis, setAtsAnalysis] = useState(null);
   const [bestResume, setBestResume] = useState(null);
   const [analyzingATS, setAnalyzingATS] = useState(false);
-  const navigate = useNavigate();
+  const [applications, setApplications] = useState([]);
+  const fetchInProgressRef = useRef(false);
   const { user, logout, isAuthenticated } = useAuth();
+  const { refreshTrigger } = useResume();
+
+  // Helper function to fetch all resume data
+  const fetchResumesData = async () => {
+    if (!isAuthenticated || fetchInProgressRef.current) return;
+    fetchInProgressRef.current = true;
+    
+    try {
+      setLoading(true);
+      const [resumeResultState, applicationsResultState] = await Promise.allSettled([
+        resumeService.getAllResumes(),
+        applicationService.getHistory(),
+      ]);
+
+      if (resumeResultState.status === 'fulfilled' && resumeResultState.value?.success) {
+        const resumeData = resumeResultState.value.data?.resumes || resumeResultState.value.data || [];
+        const list = Array.isArray(resumeData) ? resumeData : [];
+        setResumes(list);
+
+        if (list.length > 0) {
+          const topResume = list.reduce((best, r) =>
+            (r.atsScore || 0) > (best.atsScore || 0) ? r : best, list[0]);
+          setBestResume(topResume);
+          runAIAnalysis(topResume.id, list);
+        } else {
+          setBestResume(null);
+          setAtsAnalysis(null);
+        }
+      } else {
+        setResumes([]);
+        setBestResume(null);
+        setAtsAnalysis(null);
+        console.error('Failed to fetch resumes:', resumeResultState.status === 'fulfilled'
+          ? resumeResultState.value?.message
+          : resumeResultState.reason);
+      }
+
+      if (applicationsResultState.status === 'fulfilled' && applicationsResultState.value?.success) {
+        setApplications(applicationsResultState.value.data || []);
+      } else {
+        setApplications([]);
+        console.warn('Failed to fetch applications history:', applicationsResultState.status === 'fulfilled'
+          ? applicationsResultState.value?.message
+          : applicationsResultState.reason);
+      }
+    } catch (error) {
+      console.error('Failed to fetch resumes:', error);
+    } finally {
+      setLoading(false);
+      fetchInProgressRef.current = false;
+    }
+  };
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -51,37 +107,56 @@ const Dashboard = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Fetch resumes from backend
+  // Fetch resumes from backend when component mounts or when navigating back to dashboard
   useEffect(() => {
-    const fetchResumes = async () => {
-      if (!isAuthenticated) return;
-      
-      try {
-        setLoading(true);
-        const result = await resumeService.getAllResumes();
-        if (result.success) {
-          const resumeData = result.data?.resumes || result.data || [];
-          const list = Array.isArray(resumeData) ? resumeData : [];
-          setResumes(list);
+    fetchResumesData();
+  }, [isAuthenticated, location.pathname]);
 
-          // Find resume with highest stored atsScore to show immediately
-          if (list.length > 0) {
-            const topResume = list.reduce((best, r) =>
-              (r.atsScore || 0) > (best.atsScore || 0) ? r : best, list[0]);
-            setBestResume(topResume);
-            // Auto-run fresh AI analysis on the top resume
-            runAIAnalysis(topResume.id, list);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch resumes:', error);
-      } finally {
-        setLoading(false);
+  // Listen for page visibility changes to refetch data when user returns to the page
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isAuthenticated) {
+        fetchResumesData();
       }
     };
-    
-    fetchResumes();
+
+    const handleWindowFocus = () => {
+      if (isAuthenticated) {
+        fetchResumesData();
+      }
+    };
+
+    const handleResumeUpdated = () => {
+      if (isAuthenticated) {
+        fetchResumesData();
+      }
+    };
+
+    const handleStorageChange = (event) => {
+      if (event.key === 'resumeLastUpdatedAt' && isAuthenticated) {
+        fetchResumesData();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleWindowFocus);
+    window.addEventListener('resume-updated', handleResumeUpdated);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleWindowFocus);
+      window.removeEventListener('resume-updated', handleResumeUpdated);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, [isAuthenticated]);
+
+  // Listen for refresh trigger from context (e.g., when resume is saved in Builder)
+  useEffect(() => {
+    if (refreshTrigger > 0 && isAuthenticated) {
+      fetchResumesData();
+    }
+  }, [refreshTrigger, isAuthenticated]);
 
   // Analyze a specific resume with AI, then update bestResume if score is higher
   const runAIAnalysis = async (resumeId, resumeList) => {
@@ -120,7 +195,9 @@ const Dashboard = () => {
             bestData = result.data;
             topResume = resume;
           }
-        } catch (_) {}
+        } catch (error) {
+          console.warn('ATS analysis failed for resume', resume?.id, error);
+        }
       }
       if (bestData) {
         setAtsAnalysis(bestData);
@@ -150,6 +227,10 @@ const Dashboard = () => {
     ? Math.max(...resumes.map(r => r.atsScore || 0))
     : 0;
   const totalDownloads = resumes.reduce((sum, r) => sum + (r.downloads || 0), 0);
+  const totalApplications = applications.length;
+  const averageMatchScore = totalApplications > 0
+    ? Math.round(applications.reduce((sum, item) => sum + (item.matchScore || 0), 0) / totalApplications)
+    : 0;
 
   const stats = [
     {
@@ -178,10 +259,10 @@ const Dashboard = () => {
     },
     {
       icon: <Star size={24} />,
-      value: '0',
-      label: 'Saved Templates',
-      trend: '0',
-      trendUp: true,
+      value: String(totalApplications),
+      label: 'Applied Jobs',
+      trend: `${averageMatchScore}% avg match`,
+      trendUp: averageMatchScore >= 60,
       iconClass: 'accent'
     }
   ];
@@ -263,6 +344,13 @@ const Dashboard = () => {
       description: 'Optimize your resume for a specific job',
       iconClass: 'accent',
       link: '/company-role'
+    },
+    {
+      icon: <Sparkles size={26} />,
+      title: 'Smart Job Match',
+      description: 'Find jobs, match your resume, and apply faster',
+      iconClass: 'primary',
+      link: '/jobs'
     }
   ];
 
@@ -270,7 +358,7 @@ const Dashboard = () => {
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', id: 'dashboard', path: '/dashboard' },
     { icon: <FileText size={20} />, label: 'My Resumes', id: 'resumes', path: '/profile' },
     { icon: <FolderOpen size={20} />, label: 'Templates', id: 'templates', path: '/templates' },
-    { icon: <Target size={20} />, label: 'Job Tracker', id: 'jobs', path: '/company-role' },
+    { icon: <Target size={20} />, label: 'Job Tracker', id: 'jobs', path: '/jobs' },
   ];
 
   const bottomNavItems = [
@@ -661,6 +749,40 @@ const Dashboard = () => {
                 </div>
               </motion.div>
             ))
+            )}
+          </div>
+        </motion.div>
+
+        {/* Application History */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <div className="section-header">
+            <h2 className="section-title">Application History</h2>
+            <Link to="/jobs" className="section-link">
+              Track Jobs <ChevronRight size={16} />
+            </Link>
+          </div>
+          <div className="application-history-grid">
+            {applications.length === 0 ? (
+              <div className="empty-state">
+                <p>No applications saved yet. Start by matching jobs with your resume.</p>
+              </div>
+            ) : (
+              applications.slice(0, 3).map((application) => (
+                <div key={application.id} className="application-card">
+                  <h3>{application.jobTitle}</h3>
+                  <p>{application.company}</p>
+                  <div className="application-card-meta">
+                    <span>Match: {application.matchScore || 0}%</span>
+                    <span className={`status-pill status-${(application.status || 'SAVED').toLowerCase()}`}>
+                      {application.status || 'SAVED'}
+                    </span>
+                  </div>
+                </div>
+              ))
             )}
           </div>
         </motion.div>

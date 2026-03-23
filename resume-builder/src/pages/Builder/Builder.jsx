@@ -50,7 +50,8 @@ const Builder = () => {
     resumeData, 
     setResumeData,
     selectedTemplate,
-    setSelectedTemplate
+    setSelectedTemplate,
+    triggerResumeListRefresh
   } = useResume();
 
   // On mount, if templateId is passed from Upload, set it
@@ -64,6 +65,7 @@ const Builder = () => {
   const [skillInput, setSkillInput] = useState('');
   const [hobbyInput, setHobbyInput] = useState('');
   const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
   const [resumeId, setResumeId] = useState(null);
   const [showPreview, setShowPreview] = useState(true);
   const [previewScale, setPreviewScale] = useState(0.5);
@@ -235,6 +237,7 @@ const Builder = () => {
 
   const saveResume = async (navigateAfter = false) => {
     setSaving(true);
+    setSaveStatus({ type: '', message: '' });
     try {
       const dataToSave = {
         title: `${formData.personal.firstName} ${formData.personal.lastName}'s Resume`,
@@ -258,12 +261,25 @@ const Builder = () => {
       // Also save to localStorage for template page
       resumeService.saveToLocalStorage(formData);
 
+      // Trigger refresh of resume list across the app
+      if (result.success) {
+        triggerResumeListRefresh();
+        setSaveStatus({
+          type: 'success',
+          message: 'Resume saved successfully. Dashboard will update now.'
+        });
+      } else {
+        setSaveStatus({
+          type: 'error',
+          message: result?.message || 'Failed to save resume. Please try again.'
+        });
+      }
+
       if (navigateAfter) {
-        // Navigate to templates even if saving failed so user can choose a template;
-        // preserve existing behavior of attempting to save but do not block navigation.
         try {
-          if (result.success) navigate('/templates');
-          else navigate('/templates');
+          if (result.success) {
+            navigate('/templates');
+          }
         } catch (navErr) {
           console.error('Navigation to templates failed:', navErr);
         }
@@ -272,6 +288,10 @@ const Builder = () => {
       return result;
     } catch (error) {
       console.error('Failed to save resume:', error);
+      setSaveStatus({
+        type: 'error',
+        message: 'Failed to save resume. Please check your connection and try again.'
+      });
       return { success: false, error: 'Failed to save resume' };
     } finally {
       setSaving(false);
@@ -1409,6 +1429,16 @@ const Builder = () => {
             <CheckCircle size={20} />
             <span>Resume "{uploadSource}" parsed successfully! Review and edit the auto-filled details below.</span>
             <button onClick={() => setUploadSource(null)} className="banner-close">
+              <X size={16} />
+            </button>
+          </div>
+        )}
+
+        {saveStatus.message && (
+          <div className={`save-status-banner ${saveStatus.type}`}>
+            {saveStatus.type === 'success' ? <CheckCircle size={18} /> : <X size={18} />}
+            <span>{saveStatus.message}</span>
+            <button onClick={() => setSaveStatus({ type: '', message: '' })} className="banner-close">
               <X size={16} />
             </button>
           </div>

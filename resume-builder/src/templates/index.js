@@ -1,48 +1,48 @@
 // Resume Templates Configuration
-// 20 Unique Professional Resume Templates
+// 24 Resume Templates (including screenshot-style basic templates)
 
 export const templates = [
   {
     id: 100,
-    name: 'Data Scientist / Junior Dev',
+    name: 'Basic Classic A',
     style: 'datasci',
-    category: 'professional',
-    badge: 'New',
+    category: 'simple',
+    badge: 'Basic',
     isPro: false,
-    description: 'Academic, technical, and research focused',
+    description: 'Simple one-column resume matching classic screenshot style',
     primaryColor: '#222c36',
     accentColor: '#3b82f6'
   },
   {
     id: 101,
-    name: 'Classic Academic',
+    name: 'Basic Classic B',
     style: 'classic-academic',
-    category: 'academic',
-    badge: null,
+    category: 'simple',
+    badge: 'Basic',
     isPro: false,
-    description: 'Table-style education layout for academic CVs',
+    description: 'Basic text-first format for student and fresher resumes',
     primaryColor: '#111827',
     accentColor: '#6b7280'
   },
   {
     id: 102,
-    name: 'Three Column Showcase',
+    name: 'Basic Classic C',
     style: 'three-column',
-    category: 'creative',
-    badge: null,
+    category: 'simple',
+    badge: 'Basic',
     isPro: false,
-    description: 'Three column summary and skills showcase',
+    description: 'Two-column clean classic layout inspired by your screenshot',
     primaryColor: '#0f172a',
     accentColor: '#ef4444'
   },
   {
     id: 103,
-    name: 'Traditional Clean',
+    name: 'Basic Traditional',
     style: 'traditional',
-    category: 'professional',
-    badge: null,
+    category: 'simple',
+    badge: 'Basic',
     isPro: false,
-    description: 'Classic clean resume for general roles',
+    description: 'Simple traditional resume with plain text sections',
     primaryColor: '#0b1220',
     accentColor: '#3b82f6'
   },
@@ -269,10 +269,10 @@ export const templates = [
 ];
 
 export const filters = [
-  { id: 'all', label: 'All Templates', count: 20 },
-  { id: 'professional', label: 'Professional', count: 10 },
+  { id: 'all', label: 'All Templates', count: 24 },
+  { id: 'professional', label: 'Professional', count: 11 },
   { id: 'creative', label: 'Creative', count: 6 },
-  { id: 'simple', label: 'Simple', count: 4 }
+  { id: 'simple', label: 'Simple', count: 7 }
 ];
 
 export const getTemplateById = (id) => templates.find(t => t.id === id);

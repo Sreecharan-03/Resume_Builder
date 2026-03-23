@@ -26,6 +26,9 @@ import ATSResult from '../pages/ATSResult/ATSResult';
 import ImprovementGuide from '../pages/ImprovementGuide/ImprovementGuide';
 import ImproveResume from '../pages/ImproveResume/ImproveResume';
 import FinalResume from '../pages/FinalResume/FinalResume';
+import JobList from '../pages/Jobs/JobList';
+import JobDetails from '../pages/JobDetails/JobDetails';
+import ApplyAssistant from '../pages/ApplyAssistant/ApplyAssistant';
 
 /**
  * AppRoutes - Centralized routing configuration
@@ -78,6 +81,9 @@ import FinalResume from '../pages/FinalResume/FinalResume';
  *   → (role-builder OR upload→enhance) → ATSResult →
  *   → ImprovementGuide → ImproveResume → ATSResult (loop) →
  *   → FinalResume → Dashboard
+ *
+ * Job Application Flow:
+ * Dashboard → Jobs → Job Details → Apply Assistant
  */
 
 const AppRoutes = () => {
@@ -210,6 +216,31 @@ const AppRoutes = () => {
             <FinalResume />
           </ProtectedRoute>
         } 
+      />
+
+      <Route
+        path="/jobs"
+        element={
+          <ProtectedRoute>
+            <JobList />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/jobs/:jobId"
+        element={
+          <ProtectedRoute>
+            <JobDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/apply/:jobId"
+        element={
+          <ProtectedRoute>
+            <ApplyAssistant />
+          </ProtectedRoute>
+        }
       />
 
       {/* ========== CATCH-ALL: 404 ========== */}

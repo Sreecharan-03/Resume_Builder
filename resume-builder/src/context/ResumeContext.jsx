@@ -80,6 +80,9 @@ export const ResumeProvider = ({ children }) => {
     }
   });
 
+  // Trigger for refresh resume list across app
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
   // Persist to localStorage whenever data changes
   useEffect(() => {
     localStorage.setItem('resumeData', JSON.stringify(resumeData));
@@ -198,6 +201,14 @@ export const ResumeProvider = ({ children }) => {
     setResumeData(prev => ({ ...prev, ...data }));
   };
 
+  // Trigger refresh of resume list across the app
+  const triggerResumeListRefresh = () => {
+    const updateTimestamp = Date.now().toString();
+    localStorage.setItem('resumeLastUpdatedAt', updateTimestamp);
+    window.dispatchEvent(new CustomEvent('resume-updated', { detail: { ts: updateTimestamp } }));
+    setRefreshTrigger(prev => prev + 1);
+  };
+
   // Get data formatted for templates
   const getTemplateData = () => {
     return {
@@ -215,6 +226,7 @@ export const ResumeProvider = ({ children }) => {
     resumeData,
     selectedTemplate,
     templateOptions,
+    refreshTrigger,
     
     // Setters
     setResumeData,
@@ -233,6 +245,7 @@ export const ResumeProvider = ({ children }) => {
     removeHobby,
     resetResumeData,
     loadResumeData,
+    triggerResumeListRefresh,
     getTemplateData
   };
 

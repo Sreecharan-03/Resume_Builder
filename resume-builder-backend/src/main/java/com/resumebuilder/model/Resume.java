@@ -31,43 +31,33 @@ public class Resume {
     private String location;
     
     // Resume Sections
-    @Lob
     @Column(name = "summary", columnDefinition = "TEXT")
     private String summary;
     
-    @Lob
     @Column(name = "skills", columnDefinition = "TEXT")
     private String skills;
     
-    @Lob
-    @Column(name = "experience", columnDefinition = "LONGTEXT")
+    @Column(name = "experience", columnDefinition = "TEXT")
     private String experience;
     
-    @Lob
     @Column(name = "education", columnDefinition = "TEXT")
     private String education;
     
-    @Lob
     @Column(name = "certifications", columnDefinition = "TEXT")
     private String certifications;
     
-    @Lob
-    @Column(name = "projects", columnDefinition = "LONGTEXT")
+    @Column(name = "projects", columnDefinition = "TEXT")
     private String projects;
     
-    @Lob
     @Column(name = "coding_profiles", columnDefinition = "TEXT")
     private String codingProfiles;
     
-    @Lob
     @Column(name = "languages", columnDefinition = "TEXT")
     private String languages;
     
-    @Lob
     @Column(name = "activities", columnDefinition = "TEXT")
     private String activities;
     
-    @Lob
     @Column(name = "hobbies", columnDefinition = "TEXT")
     private String hobbies;
     

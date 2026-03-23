@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { useResume } from '../../context/ResumeContext';
 import { resumeService, atsService } from '../../services';
 import { 
   FileText, 
@@ -38,6 +39,7 @@ const staggerContainer = {
 
 function Upload() {
   const navigate = useNavigate();
+  const { triggerResumeListRefresh } = useResume();
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -51,6 +53,7 @@ function Upload() {
   const [atsSuggestions, setAtsSuggestions] = useState([]);
   const [pendingFormData, setPendingFormData] = useState(null);
   const [savedResumeId, setSavedResumeId] = useState(null);
+  const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -125,6 +128,7 @@ function Upload() {
     setAtsScore(null);
     setAtsError(null);
     setAtsSuggestions([]);
+    setSaveStatus({ type: '', message: '' });
     setPendingFormData(null);
     setSavedResumeId(null);
     setUploadProgress(10);
@@ -164,9 +168,24 @@ function Upload() {
           resumeId = saveResult.data.id;
           setSavedResumeId(resumeId);
           localStorage.setItem('currentResumeId', resumeId.toString());
+          // Trigger refresh of resume list across the app
+          triggerResumeListRefresh();
+          setSaveStatus({
+            type: 'success',
+            message: 'Resume saved successfully. It will appear in Dashboard.'
+          });
+        } else {
+          setSaveStatus({
+            type: 'error',
+            message: saveResult?.message || 'Resume was parsed but could not be saved to Dashboard.'
+          });
         }
       } catch (saveErr) {
         console.warn('Could not save resume to backend:', saveErr);
+        setSaveStatus({
+          type: 'error',
+          message: 'Resume was parsed but could not be saved to Dashboard.'
+        });
       }
 
       setUploadProgress(80);
@@ -546,6 +565,12 @@ function Upload() {
                     <p className="upload-ats-label" style={{ color: scoreColor }}>
                       {scoreLabel}
                     </p>
+
+                    {saveStatus.message && (
+                      <p className={`upload-save-status ${saveStatus.type}`}>
+                        {saveStatus.type === 'success' ? <CheckCircle size={14} /> : <AlertCircle size={14} />} {saveStatus.message}
+                      </p>
+                    )}
 
                     {atsError && (
                       <p className="upload-ats-warning">
