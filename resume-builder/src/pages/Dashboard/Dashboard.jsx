@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { useResume } from '../../context/ResumeContext';
-import { resumeService, atsService, applicationService } from '../../services';
+import { resumeService, atsService, applicationService, jobService } from '../../services';
 import { 
   FileText, 
   Home,
@@ -30,7 +30,10 @@ import {
   FileEdit,
   Download,
   RefreshCw,
-  Sparkles
+  Sparkles,
+  Briefcase,
+  MapPin,
+  DollarSign
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -45,6 +48,8 @@ const Dashboard = () => {
   const [bestResume, setBestResume] = useState(null);
   const [analyzingATS, setAnalyzingATS] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [matchingJobs, setMatchingJobs] = useState([]);
+  const [loadingJobs, setLoadingJobs] = useState(false);
   const fetchInProgressRef = useRef(false);
   const { user, logout, isAuthenticated } = useAuth();
   const { refreshTrigger } = useResume();
@@ -70,7 +75,10 @@ const Dashboard = () => {
           const topResume = list.reduce((best, r) =>
             (r.atsScore || 0) > (best.atsScore || 0) ? r : best, list[0]);
           setBestResume(topResume);
-          runAIAnalysis(topResume.id, list);
+          // Fetch the best historical ATS score instead of re-analyzing
+          fetchBestATSScore(topResume.id);
+          // Fetch matching jobs for the best resume
+          fetchMatchingJobs(topResume.id);
         } else {
           setBestResume(null);
           setAtsAnalysis(null);
@@ -157,6 +165,38 @@ const Dashboard = () => {
       fetchResumesData();
     }
   }, [refreshTrigger, isAuthenticated]);
+
+  // Fetch the best (highest) historical ATS score for a resume
+  const fetchBestATSScore = async (resumeId) => {
+    try {
+      const result = await atsService.getBestATSResult(resumeId);
+      if (result.success && result.data) {
+        setAtsAnalysis(result.data);
+      }
+    } catch (error) {
+      console.warn('Failed to fetch best ATS score, will show current score:', error);
+    }
+  };
+
+  // Fetch matching jobs for the best resume
+  const fetchMatchingJobs = async (resumeId) => {
+    try {
+      setLoadingJobs(true);
+      const result = await jobService.fetchJobs({ resumeId, page: 1, limit: 6 });
+      if (result.success && result.data) {
+        // Filter and get top matching jobs
+        const jobs = Array.isArray(result.data) ? result.data : (result.data?.jobs || []);
+        setMatchingJobs(jobs.slice(0, 6));
+      } else {
+        setMatchingJobs([]);
+      }
+    } catch (error) {
+      console.warn('Failed to fetch matching jobs:', error);
+      setMatchingJobs([]);
+    } finally {
+      setLoadingJobs(false);
+    }
+  };
 
   // Analyze a specific resume with AI, then update bestResume if score is higher
   const runAIAnalysis = async (resumeId, resumeList) => {
@@ -673,6 +713,106 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Matching Jobs Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.5 }}
+        >
+          <div className="section-header">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h2 className="section-title">
+                <Briefcase size={20} style={{ marginRight: '0.5rem' }} />
+                Matching Job Opportunities
+              </h2>
+              {bestResume?.targetRole && (
+                <span className="target-role-badge">{bestResume?.targetRole}</span>
+              )}
+            </div>
+            <Link to="/jobs" className="section-link">
+              View All <ChevronRight size={16} />
+            </Link>
+          </div>
+
+          {loadingJobs ? (
+            <div className="jobs-grid">
+              <div className="empty-state">
+                <p>Loading matching jobs...</p>
+              </div>
+            </div>
+          ) : matchingJobs.length === 0 ? (
+            <div className="jobs-grid">
+              <div className="empty-state">
+                <Briefcase size={48} />
+                <h3>No matching jobs found</h3>
+                <p>Create or update your resume to find better matches</p>
+                <Link to="/jobs" className="browse-jobs-btn">
+                  Browse All Jobs
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="jobs-grid">
+              {matchingJobs.map((job, index) => (
+                <motion.div 
+                  key={job.id || index}
+                  className="job-card"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 + index * 0.08 }}
+                  onClick={() => navigate(`/jobs?id=${job.id}`)}
+                >
+                  <div className="job-card-header">
+                    <h3 className="job-title">{job.title || 'Job Title'}</h3>
+                    {job.matchScore && (
+                      <span className="match-score" style={{
+                        backgroundColor: job.matchScore >= 80 ? '#6ee7b7' : job.matchScore >= 60 ? '#fcd34d' : '#ffa1b3'
+                      }}>
+                        {Math.round(job.matchScore)}% match
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="job-company">{job.company || 'Company Name'}</div>
+
+                  <div className="job-details">
+                    {job.location && (
+                      <div className="job-detail-item">
+                        <MapPin size={14} />
+                        <span>{job.location}</span>
+                      </div>
+                    )}
+                    {job.salary && (
+                      <div className="job-detail-item">
+                        <DollarSign size={14} />
+                        <span>{job.salary}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {job.description && (
+                    <p className="job-description">
+                      {job.description.substring(0, 120)}...
+                    </p>
+                  )}
+
+                  <div className="job-card-footer">
+                    <div className="job-tags">
+                      {job.skills && job.skills.slice(0, 2).map((skill, i) => (
+                        <span key={i} className="job-tag">{skill}</span>
+                      ))}
+                      {job.skills && job.skills.length > 2 && (
+                        <span className="job-tag">+{job.skills.length - 2}</span>
+                      )}
+                    </div>
+                    <ChevronRight size={16} className="job-link-arrow" />
+                  </div>
+                </motion.div>
+              ))}
             </div>
           )}
         </motion.div>

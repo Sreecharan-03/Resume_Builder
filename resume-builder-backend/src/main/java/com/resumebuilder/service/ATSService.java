@@ -245,6 +245,18 @@ public class ATSService {
         return mapResultToResponse(result, resumeId);
     }
 
+    /**
+     * Get best (highest) ATS result for a resume from historical analysis
+     */
+    public ATSDTO.AnalysisResponse getBestResult(Long resumeId, String userEmail) {
+        Resume resume = resumeService.getResumeEntityById(resumeId, userEmail);
+        
+        ATSResult result = atsResultRepository.findBestScoreByResumeId(resumeId)
+                .orElseThrow(() -> new IllegalArgumentException("No ATS analysis found for this resume"));
+
+        return mapResultToResponse(result, resumeId);
+    }
+
     // ==================== HELPER METHODS ====================
 
     private void saveATSResult(Resume resume, ATSDTO.AnalysisResponse response, 

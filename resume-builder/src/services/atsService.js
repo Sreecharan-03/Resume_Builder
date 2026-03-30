@@ -98,6 +98,22 @@ const atsService = {
   },
 
   /**
+   * Get best (highest) historical ATS result for a resume
+   */
+  getBestATSResult: async (resumeId) => {
+    try {
+      const response = await api.get(`/ats/result/best/${resumeId}`);
+      if (response.data.success) {
+        return { success: true, data: response.data.data };
+      }
+      return { success: false, message: response.data.message };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to get best ATS result';
+      return { success: false, message };
+    }
+  },
+
+  /**
    * Get ATS result by resume ID (alternative endpoint)
    */
   getATSByResumeId: async (resumeId) => {

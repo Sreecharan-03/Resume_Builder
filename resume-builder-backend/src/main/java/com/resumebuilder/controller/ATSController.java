@@ -60,6 +60,22 @@ public class ATSController {
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
     }
+
+    /**
+     * Get best (highest) ATS result for a resume from all historical analyses
+     */
+    @GetMapping("/result/best/{resumeId}")
+    public ResponseEntity<ApiResponse<ATSDTO.AnalysisResponse>> getBestATSResult(
+            Authentication authentication,
+            @PathVariable Long resumeId) {
+        try {
+            String email = authentication.getName();
+            ATSDTO.AnalysisResponse response = atsService.getBestResult(resumeId, email);
+            return ResponseEntity.ok(ApiResponse.success(response));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
     
     /**
      * Get recommendations for a resume
