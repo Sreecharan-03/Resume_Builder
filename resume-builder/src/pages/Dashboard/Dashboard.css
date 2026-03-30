@@ -1264,7 +1264,7 @@
   }
 
   .ats-score-details {
-    gaps: 0.5rem;
+    gap: 0.5rem;
   }
 
   .ats-score-circle {
